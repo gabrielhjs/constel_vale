@@ -19,26 +19,26 @@ class User:
         self.auth = auth
 
 
-class Menu(User):
-    def __init__(self, title):
-        super().__init__()
+class Menu:
+    def __init__(self, title, user):
         self.title = title
         self.auth_options = []
         self.options = None
         self.indent = '   '
+        self.user = user
 
     def set_options(self, options):
         self.options = options
-        if self.auth:
+        if self.user.auth:
             for item in range(len(self.options)):
-                if self.access in self.options[item]['accesses']:
+                if self.user.access in self.options[item]['accesses']:
                     self.auth_options.append(self.options[item])
         else:
             self.auth_options.append(
-                {'text': 'Exit', 'function': function_exit, 'accesses': [0]},
+                {'text': 'Exit', 'function': function_exit, 'accesses': [0], 'call_back': self.display},
             )
             self.auth_options.append(
-                {'text': 'Login', 'function': function_login, 'accesses': [0]},
+                {'text': 'Login', 'function': function_login, 'accesses': [0], 'call_back': self},
             )
 
     def display(self, *args):
@@ -57,7 +57,7 @@ class Menu(User):
             option = -1
 
         if 0 <= option < len(self.auth_options):
-            return self.auth_options[option]['function'](self.display)
+            return self.auth_options[option]['function'](self.auth_options[option]['call_back'])
         else:
-            function_messages(('Invalid option',))
+            function_messages(((1, 'Invalid option'),))
             return self.display()
