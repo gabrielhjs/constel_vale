@@ -1,4 +1,4 @@
-from app.functions import *
+from functions import *
 
 
 def serializer_int(text):

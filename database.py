@@ -33,7 +33,7 @@ def create_table_folha():
     query = '''
         CREATE TABLE IF NOT EXISTS estar_cartao (
         cartaocod INTEGER PRIMARY KEY,
-        cartao_blococod INTEGER NOT NULL REFERENCES estar_bloco(blococod) ON DELETE CACADE
+        cartao_blococod INTEGER NOT NULL REFERENCES estar_bloco(blococod) ON DELETE CASCADE
         );
         '''
     return db.alter(query)
@@ -82,3 +82,4 @@ if __name__ == '__main__':
     create_table_cadastro()
     create_table_entrega()
     create_table_devolucao()
+    create_table_folha()

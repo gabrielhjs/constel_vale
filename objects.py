@@ -1,4 +1,4 @@
-from app.functions import *
+from functions import *
 
 
 class User:
@@ -34,19 +34,15 @@ class Menu:
                 if self.user.access in self.options[item]['accesses']:
                     self.auth_options.append(self.options[item])
         else:
-            self.auth_options.append(
-                {'text': 'Exit', 'function': function_exit, 'accesses': [0], 'call_back': self.display},
-            )
-            self.auth_options.append(
-                {'text': 'Login', 'function': function_login, 'accesses': [0], 'call_back': self},
-            )
+            return 0
 
     def display(self, *args):
-        function_title(self.title)
-        for item in range(len(self.auth_options)):
-            print(self.indent + str(item) + ' - ' + self.auth_options[item]['text'])
+        if self.user.auth:
+            function_title(self.title)
+            for item in range(len(self.auth_options)):
+                print(self.indent + str(item) + ' - ' + self.auth_options[item]['text'])
 
-        self.get_user_option()
+            self.get_user_option()
 
     def get_user_option(self):
         print()
